@@ -500,8 +500,7 @@ function App() {
         <section className="content-panel" id="upload">
           <div className="section-heading">
             <div>
-              <h2>Upload a file</h2>
-              <p>PDF, PNG, JPG, TXT, or DOCX · Maximum 5 MB</p>
+              <p>Supported formats: PDF, PNG, JPG, JPEG, TXT, DOCX · Maximum 5 MB</p>
             </div>
           </div>
 
