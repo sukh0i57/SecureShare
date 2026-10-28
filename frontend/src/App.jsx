@@ -1,6 +1,115 @@
 
 import { useEffect, useMemo, useState } from "react";
-import "./App.css";
+import "./Apps.css";
+
+const Icons = {
+  files: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+      <polyline points="14 2 14 8 20 8"/>
+    </svg>
+  ),
+  storage: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/>
+      <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
+      <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
+    </svg>
+  ),
+  upload: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="17 8 12 3 7 8"/>
+      <line x1="12" y1="3" x2="12" y2="15"/>
+    </svg>
+  ),
+  trending: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+      <polyline points="16 7 22 7 22 13"/>
+    </svg>
+  ),
+  grid: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="7" height="7" x="3" y="3" rx="1"/>
+      <rect width="7" height="7" x="14" y="3" rx="1"/>
+      <rect width="7" height="7" x="14" y="14" rx="1"/>
+      <rect width="7" height="7" x="3" y="14" rx="1"/>
+    </svg>
+  ),
+  download: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+  ),
+  refresh: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+      <path d="M3 3v5h5"/>
+      <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+      <path d="M16 21h5v-5"/>
+    </svg>
+  ),
+  overview: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="7" height="9" x="3" y="3" rx="1"/>
+      <rect width="7" height="5" x="14" y="3" rx="1"/>
+      <rect width="7" height="9" x="14" y="12" rx="1"/>
+      <rect width="7" height="5" x="3" y="16" rx="1"/>
+    </svg>
+  ),
+  fileList: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+      <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+    </svg>
+  ),
+  uploadNav: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M8 12h8"/>
+      <path d="M12 8v8"/>
+    </svg>
+  ),
+  logout: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+      <polyline points="16 17 21 12 16 7"/>
+      <line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+  ),
+  sun: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+    </svg>
+  ),
+  moon: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+    </svg>
+  ),
+  shield: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </svg>
+  ),
+  plus: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 12h14"/>
+      <path d="M12 5v14"/>
+    </svg>
+  ),
+  search: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.3-4.3"/>
+    </svg>
+  ),
+};
 
 const API_URL = "http://localhost:5000/api/auth";
 const FILE_API_URL = "http://localhost:5000/api/files";
@@ -321,7 +430,7 @@ function App() {
           <div className="dashboard-header">
             <h1>SecureShare</h1>
             <button className="theme-toggle" onClick={toggleTheme}>
-              {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+              {theme === "dark" ? <>{Icons.sun} Light mode</> : <>{Icons.moon} Dark mode</>}
             </button>
           </div>
 
@@ -391,14 +500,14 @@ function App() {
 
             <button className="submit-btn" type="submit" disabled={loading}>
               {loading
-                ? "Please wait..."
+                ? <><span className="spinner" />Please wait...</>
                 : isLogin
                   ? "Login to SecureShare"
                   : "Create Account"}
             </button>
           </form>
 
-          {message && <p role="status">{message}</p>}
+          {message && <p role="status" className={message.includes("created") || message.includes("logged out") ? "auth-message-success" : "auth-message-error"}>{message}</p>}
           <p className="footer-text">Your files. Your privacy.</p>
         </div>
       </div>
@@ -410,16 +519,16 @@ function App() {
     <div className="app-layout">
       <aside className="sidebar">
         <a className="brand" href="#overview">
-          <span className="brand-icon">◆</span>
+          <span className="brand-icon">{Icons.shield}</span>
           <span>SecureShare</span>
         </a>
 
         <p className="sidebar-label">WORKSPACE</p>
 
         <nav className="sidebar-nav">
-          <a className="nav-item active" href="#overview">▦ <span>Overview</span></a>
-          <a className="nav-item" href="#my-files">▤ <span>My Files</span></a>
-          <a className="nav-item" href="#upload">↑ <span>Upload Files</span></a>
+          <a className="nav-item active" href="#overview">{Icons.overview} <span>Overview</span></a>
+          <a className="nav-item" href="#my-files">{Icons.fileList} <span>My Files</span></a>
+          <a className="nav-item" href="#upload">{Icons.uploadNav} <span>Upload Files</span></a>
         </nav>
 
         <div className="sidebar-bottom">
@@ -434,7 +543,7 @@ function App() {
           </div>
 
           <button className="sidebar-logout" onClick={logout}>
-            ↪ Log out
+            {Icons.logout} Log out
           </button>
         </div>
       </aside>
@@ -448,9 +557,12 @@ function App() {
 
           <div className="topbar-actions">
             <button className="theme-toggle" onClick={toggleTheme}>
-              {theme === "dark" ? "☀️ Light mode" : "🌙 Dark mode"}
+              {theme === "dark" ? <>{Icons.sun} Light mode</> : <>{Icons.moon} Dark mode</>}
             </button>
-            <div className="secure-badge">● Secure session</div>
+            <div className="secure-badge">{Icons.shield} Secure session</div>
+            <button className="mobile-logout" onClick={logout}>
+              {Icons.logout} Log out
+            </button>
           </div>
         </header>
 
@@ -460,13 +572,13 @@ function App() {
             <h2>Welcome back, {user.name} 👋</h2>
             <p>Your files, organized in one secure place.</p>
           </div>
-          <a className="primary-link" href="#upload">+ Upload a file</a>
+          <a className="primary-link" href="#upload">{Icons.plus} Upload a file</a>
         </section>
 
         <section className="stats-grid" aria-label="File statistics">
           <article className="stat-card">
             <div className="stat-top">
-              <span>Total files</span><span className="stat-icon purple">▤</span>
+              <span>Total files</span><span className="stat-icon purple">{Icons.files}</span>
             </div>
             <strong>{files.length}</strong>
             <small>Files in your workspace</small>
@@ -474,7 +586,7 @@ function App() {
 
           <article className="stat-card">
             <div className="stat-top">
-              <span>Storage used</span><span className="stat-icon blue">◫</span>
+              <span>Storage used</span><span className="stat-icon blue">{Icons.storage}</span>
             </div>
             <strong>{formatSize(totalStorage)}</strong>
             <small>Across your uploaded files</small>
@@ -482,7 +594,7 @@ function App() {
 
           <article className="stat-card">
             <div className="stat-top">
-              <span>Recent uploads</span><span className="stat-icon green">↗</span>
+              <span>Recent uploads</span><span className="stat-icon green">{Icons.trending}</span>
             </div>
             <strong>{recentUploads}</strong>
             <small>Uploaded in the last 7 days</small>
@@ -490,7 +602,7 @@ function App() {
 
           <article className="stat-card">
             <div className="stat-top">
-              <span>File types</span><span className="stat-icon orange">▦</span>
+              <span>File types</span><span className="stat-icon orange">{Icons.grid}</span>
             </div>
             <strong>{fileTypes}</strong>
             <small>Distinct extensions</small>
@@ -506,7 +618,7 @@ function App() {
 
           <form className="upload-form" onSubmit={handleUpload}>
             <label className="file-picker">
-              <span className="upload-symbol">↑</span>
+              <span className="upload-symbol">{Icons.upload}</span>
               <span>
                 <strong>
                   {selectedFile ? selectedFile.name : "Choose a file to upload"}
@@ -530,12 +642,12 @@ function App() {
 
             <button className="submit-btn" type="submit"
               disabled={uploading || !selectedFile}>
-              {uploading ? "Uploading..." : "Upload file"}
+              {uploading ? <><span className="spinner" />Uploading...</> : "Upload file"}
             </button>
           </form>
 
           {uploadMessage && (
-            <p role="status" className="feedback-message">{uploadMessage}</p>
+            <p role="status" className={`feedback-message ${uploadMessage.startsWith("Success") ? "success" : "error"}`}>{uploadMessage}</p>
           )}
         </section>
 
@@ -548,7 +660,7 @@ function App() {
 
             <button className="secondary-button" onClick={loadFiles}
               disabled={filesLoading}>
-              {filesLoading ? "Refreshing..." : "↻ Refresh"}
+              {filesLoading ? <><span className="spinner" />Refreshing...</> : <>{Icons.refresh} Refresh</>}
             </button>
           </div>
 
@@ -578,7 +690,7 @@ function App() {
 
           {!filesLoading && !filesError && files.length === 0 && (
             <div className="empty-state">
-              <span>▤</span>
+              <span>{Icons.files}</span>
               <h3>No files yet</h3>
               <p>Upload your first file to see it here.</p>
             </div>
@@ -591,7 +703,7 @@ function App() {
           {filteredFiles.map((file) => (
             <div className="file-row" key={file._id}>
               <div className="file-info">
-                <span className="file-icon">▤</span>
+                <span className="file-icon">{Icons.fileList}</span>
                 <div>
                   <p><strong>{file.originalName}</strong></p>
                   <small>
@@ -606,7 +718,7 @@ function App() {
 
               <button className="download-button"
                 onClick={() => handleDownload(file)}>
-                ↓ Download
+                {Icons.download} Download
               </button>
             </div>
           ))}
